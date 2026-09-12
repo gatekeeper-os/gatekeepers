@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: clawkeeper/openclaw-os
+          token: ${{ secrets.CORE_REPO_READ_TOKEN || github.token }}
           ref: c2b9de4a072d60e2cd88e2d2fb47217179ab8798
           path: .core
           sparse-checkout: .agents/skills/write-gatekeeper

@@ -55,6 +55,6 @@ The starter is private and fail-closed: no credentials, network adapter, account
 
 The `core-skill-sync` workflow compares this skill with core scope-migration commit
 `c2b9de4`. It fails closed if the private core checkout is unavailable: a default
-GitHub Actions token is not assumed to read a second private repository. No token
-or visibility change is part of Tier 0. Advance the reference with reviewed core
+GitHub Actions token is not assumed to read a second private repository. The optional `CORE_REPO_READ_TOKEN` Actions secret can supply read-only access;
+no credential is configured and no visibility change is part of Tier 0. Advance the reference with reviewed core
 skill changes; switch to core `main` after the release-preparation branch merges.

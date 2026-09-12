@@ -26,3 +26,8 @@ Core’s source still used the pre-publication scope at this checkpoint; the ali
 reserved public import names against its current API without claiming registry availability.
 
 Synced skill SHA-256: `ad78cbbcf1ca40da40715cb6b6c77ee199be971ff8969f1d0f5bdd9fdca3b6dc`.
+
+Final addendum refinement: `api.ts`/`simulate.ts` added and all three checks rerun
+against the scope-migrated kit. Dependencies now pin the planned `0.1.0-beta.1`
+release; no registry availability claimed. Core-skill CI was added but private
+cross-repository access is not assumed; an unreadable core is a failing check.

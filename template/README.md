@@ -31,3 +31,6 @@ It uses `@clawkeepers/gatekeeper-kit` and `@clawkeepers/shared`, which are not y
 The `.invalid` URL is illustrative. There is no network adapter, connected account, token store,
 simulation, revert, live service test, or registry-build evidence. Do not report successful type-checking
 as any of those. See [VALIDATION.md](VALIDATION.md) for the pre-publication local-only check.
+
+The `api.ts` and `simulate.ts` stubs deny every operation; they do not promise a
+network adapter or synthetic effect. `resource.ts` remains the kit subclass.

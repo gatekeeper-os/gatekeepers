@@ -52,3 +52,9 @@ The starter is private and fail-closed: no credentials, network adapter, account
 - Errors returned to the agent are sanitized (no URLs, tokens, vendor bodies) — use `sanitizeError()` from the kit.
 - The observer strategy is justified in the README (A private-only, B ACL check, C dataset tracking, D low-stakes) using the rule from the docs: C only when the binding spans sub-resources with distinct ACLs *and* there's a per-observer oracle.
 - A resource never becomes ambient by the gatekeeper's own doing.
+
+The `core-skill-sync` workflow compares this skill with core scope-migration commit
+`c2b9de4`. It fails closed if the private core checkout is unavailable: a default
+GitHub Actions token is not assumed to read a second private repository. No token
+or visibility change is part of Tier 0. Advance the reference with reviewed core
+skill changes; switch to core `main` after the release-preparation branch merges.

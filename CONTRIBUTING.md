@@ -53,8 +53,11 @@ The starter is private and fail-closed: no credentials, network adapter, account
 - The observer strategy is justified in the README (A private-only, B ACL check, C dataset tracking, D low-stakes) using the rule from the docs: C only when the binding spans sub-resources with distinct ACLs *and* there's a per-observer oracle.
 - A resource never becomes ambient by the gatekeeper's own doing.
 
-The `core-skill-sync` workflow compares this skill with core scope-migration commit
-`c2b9de4`. It fails closed if the private core checkout is unavailable: a default
-GitHub Actions token is not assumed to read a second private repository. The optional `CORE_REPO_READ_TOKEN` Actions secret can supply read-only access;
-no credential is configured and no visibility change is part of Tier 0. Advance the reference with reviewed core
-skill changes; switch to core `main` after the release-preparation branch merges.
+Tier 0 CI verifies the complete file set and SHA-256 hashes in the reviewed
+`.github/core-skill-lock.json` snapshot. The release lane verifies byte-for-byte
+parity against its recorded core commit before merging. This is **pinned snapshot
+integrity, not a live core-main synchronization check**: no credentials, cross-repo
+private read access, publication or visibility change is needed. Refresh the lock
+only with a reviewed core comparison. After coordinated publication, restore the
+live core checkout comparison as part of Tier 1. Driver builds still wait for npm
+kit/shared publication.

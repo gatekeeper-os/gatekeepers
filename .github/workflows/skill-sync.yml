@@ -1,4 +1,4 @@
-name: core-skill-sync
+name: core-skill-snapshot
 on:
   pull_request:
   push:
@@ -10,16 +10,5 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Checkout authoritative core skill
-        # Private cross-repository GITHUB_TOKEN access is not assumed. This job
-        # fails closed if core is unreadable; it becomes usable with public core
-        # or an explicitly configured repository-read credential.
-        uses: actions/checkout@v4
-        with:
-          repository: clawkeeper/openclaw-os
-          token: ${{ secrets.CORE_REPO_READ_TOKEN || github.token }}
-          ref: c2b9de4a072d60e2cd88e2d2fb47217179ab8798
-          path: .core
-          sparse-checkout: .agents/skills/write-gatekeeper
-      - name: Require byte-identical authoring procedure
-        run: diff -ru .core/.agents/skills/write-gatekeeper .agents/skills/write-gatekeeper
+      - name: Verify reviewed Tier 0 core skill snapshot
+        run: python3 .github/check-core-skill.py

@@ -1,3 +1,16 @@
+# Registry-backed validation — 2026-09-12
+
+Tier 1 installs kit/shared at exact `0.1.0-beta.1` from npm via the committed
+pnpm lockfile. No core source aliases, workspace links, or local tarballs are used.
+`pnpm typecheck`, `pnpm build`, `pnpm test`, and `pnpm check:secrets` verify the
+inert template; import of its built entry executes the published kit's synchronous
+`defineGatekeeper()` declaration validation. This is not runtime service acceptance.
+
+Live skill synchronization is a separate gate: it fetches current private core
+main, compares the complete file tree, and fails if unreadable or different.
+
+## Historical Tier 0 evidence (superseded, not registry acceptance)
+
 # Pre-publication validation
 
 Validated 2026-09-12 against core commit `08cd8d8b8e44fd0180cd0ebbc47ba8f244b07f3e`.

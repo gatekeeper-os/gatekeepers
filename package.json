@@ -1,0 +1,13 @@
+{
+  "name": "clawkeeper-community-gatekeepers",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "node scripts/check-registry.mjs && node --test scripts/template.test.mjs",
+    "check:secrets": "bash scripts/check-secrets.sh"
+  },
+  "devDependencies": { "openclaw": "2026.9.2" }
+}

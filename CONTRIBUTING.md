@@ -2,16 +2,18 @@
 
 Read the org-wide [CONTRIBUTING](https://github.com/clawkeeper/.github/blob/main/CONTRIBUTING.md) first. This file is the part specific to drivers.
 
+**Tool-surface PRs welcome now, builds start after publication.** Submit draft tool/resource designs today; installing and building community drivers against npm begins after `@clawkeepers/gatekeeper-kit` and `@clawkeepers/shared` are published. Do not work around this by vendoring the kit or treating a local-only check as registry availability.
+
 ## The procedure
 
-This is the `write-gatekeeper` skill, condensed. The full version in `.agents/skills/write-gatekeeper/SKILL.md` is what your agent should follow.
+This is the `write-gatekeeper` skill, condensed. The full version in `.agents/skills/write-gatekeeper/SKILL.md` is what your agent should follow. It is copied byte-for-byte from core; its `docs/`, `packages/`, `config/`, and harness paths refer to the core checkout. New community package names use the `@clawkeepers` scope.
 
 **Phase 1 — auth, API, granting**
 
 1. Understand the service: its auth model, which resource granularities are *meaningful* (a repo, an issue — not a single field), which operations are reads vs. writes, which writes are reversible.
 2. Design the tool surface in `src/tools.ts`: one small group of tools per resource type, every tool takes `grant`, structured inputs and outputs, simplified for the common case. Decide which URL patterns `getGatekeeperFor()` matches.
-3. **STOP.** Open a draft PR containing only `README.md` and `src/tools.ts` and ask for review. The tool surface is the part that is expensive to change later; we review it before anything else is written.
-4. Implement from `SKELETON.md`: vendor, account store, OAuth routes with the two-stage nonce from the kit, per-resource gatekeeper, session.
+3. **STOP.** Open a draft PR containing only `README.md`, `src/tools.ts`, and `src/resources.ts` and ask for review. The tool surface is the part that is expensive to change later; we review it before anything else is written.
+4. After STOP 1 approval, copy [`template/`](template/) to `<vendor>/` and implement against [core’s skeleton](https://github.com/clawkeeper/openclaw-os/blob/main/packages/gatekeeper-kit/SKELETON.md): vendor, account store, per-resource `KitGatekeeper`, and session. The kernel OAuth router owns the two-stage nonce; vendors preserve its state and perform provider/PKCE checks, not a parallel nonce store.
 5. Register: `openclaw.plugin.json` with the `clawos.gatekeeper` marker; `package.json` with `openclaw.compat`; add a row to the catalog.
 6. **STOP.** Ask whether to proceed to Phase 2.
 
@@ -19,26 +21,29 @@ This is the `write-gatekeeper` skill, condensed. The full version in `.agents/sk
 
 7. Wrap *every* outside-world interaction in `authorizeObservation()` / `submitAction()`.
 8. Caching, then simulation (overlay-at-read is the kit default; mutate-the-cache is available), then the observer strategy for each resource type.
-9. `pnpm conformance --gatekeeper <vendor>` must pass.
+9. Run core’s `pnpm conformance --only deferred-approval,require-approval-roundtrip` and the kit harness tests, then the secret-leak gate. Live acceptance runs via core’s `scripts/vm/test.sh` as documented in `docs/vm-testing.md`; a local type-check is not acceptance. The CLI has no `--gatekeeper` selector.
 
 ## Folder layout
 
 ```
 gatekeepers/<vendor>/
-├── openclaw.plugin.json     # id gatekeeper-<vendor>, contracts.tools, clawos.gatekeeper marker
-├── package.json             # @clawos/gatekeeper-<vendor>, openclaw.compat, peer on openclaw
+├── openclaw.plugin.json     # id gatekeeper-<vendor>, empty contracts.tools, clawos.gatekeeper marker
+├── package.json             # @clawkeepers/gatekeeper-<vendor>, openclaw.compat, peer on openclaw
 ├── src/
 │   ├── index.ts             # export default defineGatekeeper({...})
 │   ├── vendor.ts            # describe, connectAccount, resources
 │   ├── account.ts           # token store, refresh, getGatekeeperFor
 │   ├── <resource>.ts        # one Gatekeeper impl per resource type
 │   ├── tools.ts             # GatekeeperToolDef[] (TypeBox)
+│   ├── resources.ts         # SupportedResource[] with explicit observer strategy
 │   ├── simulate.ts          # overlay rules per action kind
 │   └── api.ts               # thin wrapper over the vendor HTTP API
 ├── deploy-inputs.json       # which secrets, console URL, redirect URI template
 ├── README.md                # what it grants, tool list, observer strategy, known limits
 └── test/
 ```
+
+The starter is private and fail-closed: no credentials, network adapter, account connection, successful observation, or action application. Rename `example` and replace its disabled stubs only after the required reviews. Match compatibility ranges to core’s catalog at implementation time; do not mechanically rename protocol keys such as `clawos.gatekeeper`.
 
 ## Things reviewers will check
 

@@ -1,4 +1,4 @@
-name: core-skill-snapshot
+name: tier1
 on:
   pull_request:
   push:
@@ -6,9 +6,32 @@ on:
 permissions:
   contents: read
 jobs:
-  skill-sync:
+  build-test:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Verify reviewed Tier 0 core skill snapshot
-        run: python3 .github/check-core-skill.py
+        with:
+          persist-credentials: false
+      - name: Fetch current core skill (core-only read token while private)
+        uses: actions/checkout@v4
+        with:
+          repository: clawkeeper/openclaw-os
+          ref: main
+          path: .core-skill
+          sparse-checkout: .agents/skills/write-gatekeeper
+          token: ${{ secrets.CORE_SKILL_READ_TOKEN || github.token }}
+          persist-credentials: false
+      - name: Compare live core-main skill
+        run: |
+          git -C .core-skill rev-parse HEAD
+          python3 .github/check-core-skill.py
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.3'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm check:secrets

@@ -6,7 +6,25 @@ A gatekeeper is the driver through which an agent reaches one service. It holds 
 
 All four reference drivers — **fs**, **github**, **mcp**, and **http** — live in the [core repository](https://github.com/clawkeeper/openclaw-os), at `packages/gatekeeper-fs`, `packages/gatekeeper-github`, `packages/gatekeeper-mcp`, and `packages/gatekeeper-http`. This is a location rule, not a claim that every driver is release-ready; check each driver’s current plan and evidence in core. Community service drivers live here, one folder per vendor.
 
-**Tool-surface PRs welcome now, builds start after publication.** Community drivers can build here once `@clawkeepers/gatekeeper-kit` and `@clawkeepers/shared` are published to npm. The `@clawkeepers` organization exists and is owned by Matt; the packages are not yet published. This Tier 0 repository contains contribution docs and an inert starter, not a runnable community service.
+**Tier 1: registry-backed builds.** `@clawkeepers/gatekeeper-kit` and
+`@clawkeepers/shared` are published at `0.1.0-beta.1`; this workspace pins those
+registry versions with integrity-locked dependencies, not links to core. The
+starter remains private and inert, not a runnable community service. Tool-surface
+PRs remain welcome and the two reviews are still required.
+
+```sh
+corepack enable
+pnpm install --frozen-lockfile
+pnpm typecheck
+pnpm build
+pnpm test
+pnpm check:secrets
+```
+
+CI also fetches current core `main` and compares the complete write-gatekeeper
+skill tree. While core is private, this requires the dedicated Actions secret
+`CORE_SKILL_READ_TOKEN` with read-only contents access to core. No pinned-snapshot
+fallback is accepted, and checkout credentials are not persisted for build steps.
 
 ## Gatekeepers
 

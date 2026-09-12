@@ -2,7 +2,10 @@
 
 Read the org-wide [CONTRIBUTING](https://github.com/clawkeeper/.github/blob/main/CONTRIBUTING.md) first. This file is the part specific to drivers.
 
-**Tool-surface PRs welcome now, builds start after publication.** Submit draft tool/resource designs today; installing and building community drivers against npm begins after `@clawkeepers/gatekeeper-kit` and `@clawkeepers/shared` are published. Do not work around this by vendoring the kit or treating a local-only check as registry availability.
+**Tool-surface PRs welcome; registry builds are available.** Use the exact published
+`@clawkeepers/gatekeeper-kit@0.1.0-beta.1` and `@clawkeepers/shared@0.1.0-beta.1`
+dependencies. Do not vendor the kit or replace registry dependencies with local
+workspace links. The starter remains draft, not an accepted service.
 
 ## The procedure
 
@@ -53,11 +56,9 @@ The starter is private and fail-closed: no credentials, network adapter, account
 - The observer strategy is justified in the README (A private-only, B ACL check, C dataset tracking, D low-stakes) using the rule from the docs: C only when the binding spans sub-resources with distinct ACLs *and* there's a per-observer oracle.
 - A resource never becomes ambient by the gatekeeper's own doing.
 
-Tier 0 CI verifies the complete file set and SHA-256 hashes in the reviewed
-`.github/core-skill-lock.json` snapshot. The release lane verifies byte-for-byte
-parity against its recorded core commit before merging. This is **pinned snapshot
-integrity, not a live core-main synchronization check**: no credentials, cross-repo
-private read access, publication or visibility change is needed. Refresh the lock
-only with a reviewed core comparison. After coordinated publication, restore the
-live core checkout comparison as part of Tier 1. Driver builds still wait for npm
-kit/shared publication.
+Tier 1 CI fetches core main and compares the complete skill tree. It fails when
+core is unreadable or the tree differs; there is no pinned-snapshot substitute.
+A dedicated read-only core credential is required while the source is private.
+Never expose it to contributor code or persist checkout credentials. Copy the
+complete reviewed skill from current core when updating it. Registry-backed
+build/typecheck/declaration tests do not establish live driver acceptance.

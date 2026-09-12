@@ -5,7 +5,7 @@ This repo holds community gatekeepers for OpenClaw OS. The kernel, contracts and
 
 ## Invariants (same as the core repo, restated for drivers)
 1. **No upstream modification.** Never patch, fork, vendor, or monkey-patch `openclaw`. Import only `openclaw/plugin-sdk/*`
-   and `@clawos/gatekeeper-kit` / `@clawos/shared`. Never read upstream's SQLite. Never write under the upstream install root.
+   and `@clawkeepers/gatekeeper-kit` / `@clawkeepers/shared`. Never read upstream's SQLite. Never write under the upstream install root.
 2. **Capabilities.** Every tool takes `grant`. Never call `api.registerTool` — the kernel registers tools on your behalf and
    funnels every call through `resolveGrant()`. A resource becomes ambient only through operator configuration; a gatekeeper
    never asserts its own ambience.

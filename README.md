@@ -1,10 +1,12 @@
 # gatekeepers
 
-Community gatekeepers for [OpenClaw OS](https://github.com/clawkeeper/openclaw-os): one folder per external service, each an OpenClaw plugin built on `@clawos/gatekeeper-kit`.
+Community gatekeepers for [OpenClaw OS](https://github.com/clawkeeper/openclaw-os): one folder per external service, each an OpenClaw plugin built on `@clawkeepers/gatekeeper-kit`.
 
 A gatekeeper is the driver through which an agent reaches one service. It holds the credentials (the agent never sees them), exposes a small set of capability-oriented tools that take a grant handle, logs every read, queues every write for human approval, and simulates the write locally so the agent keeps working in the meantime.
 
-The reference implementations — `gatekeeper-fs` and `gatekeeper-github` — live in the core repo and are the best examples to read first.
+All four reference drivers — **fs**, **github**, **mcp**, and **http** — live in the [core repository](https://github.com/clawkeeper/openclaw-os), at `packages/gatekeeper-fs`, `packages/gatekeeper-github`, `packages/gatekeeper-mcp`, and `packages/gatekeeper-http`. This is a location rule, not a claim that every driver is release-ready; check each driver’s current plan and evidence in core. Community service drivers live here, one folder per vendor.
+
+**Tool-surface PRs welcome now, builds start after publication.** Community drivers can build here once `@clawkeepers/gatekeeper-kit` and `@clawkeepers/shared` are published to npm. The `@clawkeepers` organization exists and is owned by Matt; the packages are not yet published. This Tier 0 repository contains contribution docs and an inert starter, not a runnable community service.
 
 ## Gatekeepers
 
@@ -20,9 +22,9 @@ See the [gatekeeper-wanted issues](https://github.com/clawkeeper/gatekeepers/iss
 
 ## Building one
 
-Follow [`.agents/skills/write-gatekeeper/SKILL.md`](.agents/skills/write-gatekeeper/SKILL.md). It is written so that a coding agent can execute it, and it has two **STOP** points where the tool surface must be reviewed by a human before implementation starts. `SKELETON.md` in the same folder is the file layout to copy.
+Follow [`.agents/skills/write-gatekeeper/SKILL.md`](.agents/skills/write-gatekeeper/SKILL.md). It is written so that a coding agent can execute it, and it has two **STOP** points: tool-surface review before implementation, then approval before responsibilities 4–7. Copy the real files in [`template/`](template/) after tool-surface review. The skill is an exact copy of core’s; its `docs/`, `packages/`, `config/`, and harness paths refer to a core checkout. The prose skeleton is [core’s `packages/gatekeeper-kit/SKELETON.md`](https://github.com/clawkeeper/openclaw-os/blob/main/packages/gatekeeper-kit/SKELETON.md), not a second local skill file.
 
-The one rule that is never negotiable: **every outside-world interaction goes through `authorizeObservation()` or `submitAction()`.** `pnpm conformance --gatekeeper <vendor>` fails if it finds one that doesn't, if any tool description mentions approvals/OAuth/caching/queues, or if any action lacks an `implementsRevert` declaration.
+The one rule that is never negotiable: **every outside-world interaction goes through `authorizeObservation()` or `submitAction()`.** Use core’s supported `pnpm conformance --only deferred-approval,require-approval-roundtrip` command plus kit tests, the secret-leak gate, and the VM harness for live acceptance. There is no `--gatekeeper` CLI selector. Type-checking the starter is not driver conformance or live evidence.
 
 ## License
 

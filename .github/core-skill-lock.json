@@ -1,0 +1,8 @@
+{
+  "repository": "clawkeeper/openclaw-os",
+  "commit": "dc5ba82e519aef71b15b01f5cb2e2339b9217606",
+  "verification": "pinned snapshot; parent release lane verified byte parity against this core commit",
+  "files": {
+    "SKILL.md": "ad78cbbcf1ca40da40715cb6b6c77ee199be971ff8969f1d0f5bdd9fdca3b6dc"
+  }
+}

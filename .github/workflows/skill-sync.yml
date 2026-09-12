@@ -1,0 +1,14 @@
+name: core-skill-snapshot
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  skill-sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify reviewed Tier 0 core skill snapshot
+        run: python3 .github/check-core-skill.py

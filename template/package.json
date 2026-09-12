@@ -1,0 +1,49 @@
+{
+  "name": "@clawkeepers/gatekeeper-example",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Inert community gatekeeper starter; not a service.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "LICENSE",
+    "NOTICE",
+    "dist",
+    "openclaw.plugin.json",
+    "deploy-inputs.json",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsup src/index.ts --format esm --dts --clean"
+  },
+  "dependencies": {
+    "@clawkeepers/gatekeeper-kit": "0.1.0-beta.1",
+    "@clawkeepers/shared": "0.1.0-beta.1",
+    "typebox": "1.1.39"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.0",
+    "typescript": "5.9.2",
+    "tsup": "8.5.0"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.9.2 <2026.11.0"
+  },
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.9.2 <2026.11.0",
+      "minGatewayVersion": "2026.9.2"
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clawkeeper/gatekeepers.git",
+    "directory": "template"
+  }
+}

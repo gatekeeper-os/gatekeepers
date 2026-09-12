@@ -1,0 +1,40 @@
+name: Gatekeeper wanted
+description: Request a gatekeeper for a service, or volunteer to build one
+labels: ["gatekeeper-wanted"]
+body:
+  - type: input
+    id: service
+    attributes:
+      label: Service
+      placeholder: Linear, Notion, Home Assistant, Gmail…
+    validations:
+      required: true
+  - type: textarea
+    id: resources
+    attributes:
+      label: What would you want to grant?
+      description: The resource granularities that make sense — "a project", "a page and its children", "one mailbox". Not "the whole account".
+    validations:
+      required: true
+  - type: textarea
+    id: ops
+    attributes:
+      label: Reads vs. writes
+      description: Which operations are observations (reads) and which are actions (writes)? Which writes could be reverted?
+  - type: dropdown
+    id: auth
+    attributes:
+      label: Auth model
+      options:
+        - OAuth (web flow)
+        - OAuth (device code)
+        - API key / static token
+        - No auth (local / MCP server)
+        - Not sure
+  - type: dropdown
+    id: volunteer
+    attributes:
+      label: Are you volunteering to build it?
+      options:
+        - "Yes — I'll open the tool-surface PR"
+        - "No — just requesting"

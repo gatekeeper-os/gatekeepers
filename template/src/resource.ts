@@ -1,5 +1,5 @@
-import { KitGatekeeper, OverlayStore, type ActionImpl, type ObservationImpl } from "@clawkeepers/gatekeeper-kit";
-import type { ActionDescription } from "@clawkeepers/shared";
+import { KitGatekeeper, OverlayStore, type ActionImpl, type ObservationImpl } from "@gatekeeper-os/gatekeeper-kit";
+import type { ActionDescription } from "@gatekeeper-os/shared";
 import { itemResource } from "./resources.js";
 
 // Shared pure descriptor for registration and the resource. No simulation or revert is implemented.

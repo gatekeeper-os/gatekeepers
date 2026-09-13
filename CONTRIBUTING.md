@@ -1,23 +1,23 @@
 # Contributing a gatekeeper
 
-Read the org-wide [CONTRIBUTING](https://github.com/clawkeeper/.github/blob/main/CONTRIBUTING.md) first. This file is the part specific to drivers.
+Read the org-wide [CONTRIBUTING](https://github.com/gatekeeper-os/.github/blob/main/CONTRIBUTING.md) first. This file is the part specific to drivers.
 
-**Tool-surface PRs welcome; registry builds are available.** Use the exact published
-`@clawkeepers/gatekeeper-kit@0.1.0-beta.1` and `@clawkeepers/shared@0.1.0-beta.1`
-dependencies. Do not vendor the kit or replace registry dependencies with local
+**Tool-surface PRs welcome; registry builds are available.** Use the renamed imports
+`@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared` via the temporary
+previous-scope registry aliases documented in [MIGRATION.md](MIGRATION.md). Do not vendor the kit or replace registry dependencies with local
 workspace links. The starter remains draft, not an accepted service.
 
 ## The procedure
 
-This is the `write-gatekeeper` skill, condensed. The full version in `.agents/skills/write-gatekeeper/SKILL.md` is what your agent should follow. It is copied byte-for-byte from core; its `docs/`, `packages/`, `config/`, and harness paths refer to the core checkout. New community package names use the `@clawkeepers` scope.
+This is the `write-gatekeeper` skill, condensed. The full version in `.agents/skills/write-gatekeeper/SKILL.md` is what your agent should follow. It is copied byte-for-byte from core; its `docs/`, `packages/`, `config/`, and harness paths refer to the core checkout. New community package names use the `@gatekeeper-os` scope.
 
 **Phase 1 — auth, API, granting**
 
 1. Understand the service: its auth model, which resource granularities are *meaningful* (a repo, an issue — not a single field), which operations are reads vs. writes, which writes are reversible.
 2. Design the tool surface in `src/tools.ts`: one small group of tools per resource type, every tool takes `grant`, structured inputs and outputs, simplified for the common case. Decide which URL patterns `getGatekeeperFor()` matches.
 3. **STOP.** Open a draft PR containing only `README.md`, `src/tools.ts`, and `src/resources.ts` and ask for review. The tool surface is the part that is expensive to change later; we review it before anything else is written.
-4. After STOP 1 approval, copy [`template/`](template/) to `<vendor>/` and implement against [core’s skeleton](https://github.com/clawkeeper/openclaw-os/blob/main/packages/gatekeeper-kit/SKELETON.md): vendor, account store, per-resource `KitGatekeeper`, and session. The kernel OAuth router owns the two-stage nonce; vendors preserve its state and perform provider/PKCE checks, not a parallel nonce store.
-5. Register: `openclaw.plugin.json` with the `clawos.gatekeeper` marker; `package.json` with `openclaw.compat`; add a row to the catalog.
+4. After STOP 1 approval, copy [`template/`](template/) to `<vendor>/` and implement against [core’s skeleton](https://github.com/gatekeeper-os/gatekeeper-os/blob/main/packages/gatekeeper-kit/SKELETON.md): vendor, account store, per-resource `KitGatekeeper`, and session. The kernel OAuth router owns the two-stage nonce; vendors preserve its state and perform provider/PKCE checks, not a parallel nonce store.
+5. Register: `openclaw.plugin.json` with the `gkos.gatekeeper` marker; `package.json` with `openclaw.compat`; add a row to the catalog.
 6. **STOP.** Ask whether to proceed to Phase 2.
 
 **Phase 2 — approvals, caching, simulation, observers**
@@ -30,8 +30,8 @@ This is the `write-gatekeeper` skill, condensed. The full version in `.agents/sk
 
 ```
 gatekeepers/<vendor>/
-├── openclaw.plugin.json     # id gatekeeper-<vendor>, empty contracts.tools, clawos.gatekeeper marker
-├── package.json             # @clawkeepers/gatekeeper-<vendor>, openclaw.compat, peer on openclaw
+├── openclaw.plugin.json     # id gatekeeper-<vendor>, empty contracts.tools, gkos.gatekeeper marker
+├── package.json             # @gatekeeper-os/gatekeeper-<vendor>, openclaw.compat, peer on openclaw
 ├── src/
 │   ├── index.ts             # export default defineGatekeeper({...})
 │   ├── vendor.ts            # describe, connectAccount, resources
@@ -46,7 +46,7 @@ gatekeepers/<vendor>/
 └── test/
 ```
 
-The starter is private and fail-closed: no credentials, network adapter, account connection, successful observation, or action application. Rename `example` and replace its disabled stubs only after the required reviews. Match compatibility ranges to core’s catalog at implementation time; do not mechanically rename protocol keys such as `clawos.gatekeeper`.
+The starter is private and fail-closed: no credentials, network adapter, account connection, successful observation, or action application. Rename `example` and replace its disabled stubs only after the required reviews. Match compatibility ranges to core’s catalog at implementation time; do not mechanically rename protocol keys such as `gkos.gatekeeper`.
 
 ## Things reviewers will check
 

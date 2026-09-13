@@ -28,10 +28,19 @@ pnpm test
 pnpm check:secrets
 ```
 
-CI also fetches current core `main` and compares the complete write-gatekeeper
-skill tree. While core is private, this requires the dedicated Actions secret
-`CORE_SKILL_READ_TOKEN` with read-only contents access to core. No pinned-snapshot
-fallback is accepted, and checkout credentials are not persisted for build steps.
+CI always checks the reviewed pinned write-gatekeeper snapshot and separately
+probes core without credentials. While core is private/unreadable (HTTP 404), it
+reports `live sync skipped: core repository not readable`; the live step is
+skipped, not passed. Once readable, fetching core `main` and comparing the complete
+skill tree is mandatory, and any fetch/parity failure is fatal. Probe transport or
+other HTTP errors also fail the job. No core-read token is required.
+
+### Public-flip launch checklist
+
+- [ ] After the separately authorized public flip, re-run gatekeepers `build-test`.
+- [ ] Confirm **Live core-main fetch and parity (required when readable)** ran and
+  passed, not skipped, without credentials. Pinned parity is not live-sync evidence.
+- [ ] Only after that evidence, remove the temporary private-core skip path.
 
 ## Gatekeepers
 

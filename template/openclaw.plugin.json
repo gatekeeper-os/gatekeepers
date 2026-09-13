@@ -1,7 +1,7 @@
 {
   "id": "gatekeeper-example",
-  "name": "Example Gatekeeper",
-  "description": "Disconnected driver starter.",
+  "name": "GatekeeperOS Example Gatekeeper",
+  "description": "Disconnected GatekeeperOS driver starter.",
   "contracts": {
     "tools": []
   },
@@ -10,7 +10,7 @@
     "additionalProperties": false,
     "properties": {}
   },
-  "clawos": {
+  "gkos": {
     "gatekeeper": {
       "vendor": "example",
       "apiVersion": 1

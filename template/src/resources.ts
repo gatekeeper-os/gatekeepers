@@ -1,4 +1,4 @@
-import type { SupportedResource } from "@clawkeepers/shared";
+import type { SupportedResource } from "@gatekeeper-os/shared";
 
 export const itemResource: SupportedResource = {
   type: "item", urlPattern: "https://example.invalid/items/:id", title: "Example Item",

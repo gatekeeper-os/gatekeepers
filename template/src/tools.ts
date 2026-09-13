@@ -1,5 +1,5 @@
 import { Type } from "typebox";
-import type { GatekeeperToolDef } from "@clawkeepers/shared";
+import type { GatekeeperToolDef } from "@gatekeeper-os/shared";
 
 // Illustrative metadata only; real service surfaces require STOP 1 review.
 export const tools: GatekeeperToolDef[] = [

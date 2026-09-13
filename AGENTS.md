@@ -1,11 +1,11 @@
 # AGENTS.md — operating rules for agents working in this repository
 
-This repo holds community gatekeepers for OpenClaw OS. The kernel, contracts and kit live in the core repo
-(https://github.com/clawkeeper/openclaw-os); read its `docs/implementation-plan.md` §4 before writing a driver.
+This repo holds community gatekeepers for GatekeeperOS. The kernel, contracts and kit live in the core repo
+(https://github.com/gatekeeper-os/gatekeeper-os); read its `docs/implementation-plan.md` §4 before writing a driver.
 
 ## Invariants (same as the core repo, restated for drivers)
 1. **No upstream modification.** Never patch, fork, vendor, or monkey-patch `openclaw`. Import only `openclaw/plugin-sdk/*`
-   and `@clawkeepers/gatekeeper-kit` / `@clawkeepers/shared`. Never read upstream's SQLite. Never write under the upstream install root.
+   and `@gatekeeper-os/gatekeeper-kit` / `@gatekeeper-os/shared`. Never read upstream's SQLite. Never write under the upstream install root.
 2. **Capabilities.** Every tool takes `grant`. Never call `api.registerTool` — the kernel registers tools on your behalf and
    funnels every call through `resolveGrant()`. A resource becomes ambient only through operator configuration; a gatekeeper
    never asserts its own ambience.

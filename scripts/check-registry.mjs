@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { readFileSync, realpathSync } from 'node:fs';
 for (const name of ['gatekeeper-kit', 'shared']) {
-  const pkg = `@clawkeepers/${name}`;
+  const pkg = `@gatekeeper-os/${name}`;
+  const version = '0.1.0-beta.2';
   const spec = JSON.parse(readFileSync(new URL('../template/package.json', import.meta.url))).dependencies[pkg];
-  assert.equal(spec, '0.1.0-beta.1');
+  assert.equal(spec, version);
   const entry = realpathSync(new URL(`../template/node_modules/${pkg}/package.json`, import.meta.url));
   const manifest = JSON.parse(readFileSync(entry));
   assert.equal(manifest.name, pkg);
-  assert.equal(manifest.version, spec);
+  assert.equal(manifest.version, version);
   assert.match(entry, /node_modules\/.pnpm\//);
   console.log(`${pkg}@${manifest.version}: registry dependency verified`);
 }

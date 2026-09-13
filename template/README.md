@@ -1,8 +1,12 @@
 # Inert gatekeeper starter
 
+GatekeeperOS is an independent project. It is not affiliated with or endorsed by the OpenClaw Foundation. OpenClaw is a trademark of its owner.
+
 **Draft only. Registry-backed builds available; tool-surface reviews still required.** This is a real-file
 companion to core's gatekeeper skeleton, not a functioning service or an npm package to publish.
-It uses `@clawkeepers/gatekeeper-kit` and `@clawkeepers/shared`, pinned to their published `0.1.0-beta.1` registry versions.
+The `gkos-gatekeeper-example` id follows the renamed kit contract. This starter is not a runnable plugin acceptance claim.
+
+It uses `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`, pinned to exact `0.1.0-beta.2` registry versions. Publication and a fresh registry lockfile are required before this staged change can merge.
 `private: true` prevents accidental publication; do not install this starter in a running cell.
 
 ## Start a contribution
@@ -11,7 +15,7 @@ It uses `@clawkeepers/gatekeeper-kit` and `@clawkeepers/shared`, pinned to their
    PR contains README, tools and resource metadata only; do not copy implementation stubs before STOP 1 approval.
 2. After approval, copy this directory to `<vendor>/` at repository root.
    Rename package/plugin/vendor/tool identities and URLs, and match package versions and OpenClaw
-   compatibility to the then-current core catalog. `clawos.gatekeeper` is a protocol marker, not an npm scope.
+   compatibility to the then-current core catalog. `gkos.gatekeeper` is a protocol marker, not an npm scope.
 3. From the copied directory: `pnpm install`, `pnpm typecheck`, `pnpm build`.
    Package versions pin the published 0.1.0-beta.1 release.
 4. Implement auth, resource access and persistence only after review; request STOP 2 approval before

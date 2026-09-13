@@ -1,13 +1,10 @@
-# Registry-backed validation — 2026-09-12
+# Registry-backed beta.2 validation — pending
 
-Tier 1 installs kit/shared at exact `0.1.0-beta.1` from npm via the committed
-pnpm lockfile. No core source aliases, workspace links, or local tarballs are used.
-`pnpm typecheck`, `pnpm build`, `pnpm test`, and `pnpm check:secrets` verify the
-inert template; import of its built entry executes the published kit's synchronous
-`defineGatekeeper()` declaration validation. This is not runtime service acceptance.
-
-Live skill synchronization is a separate gate: it fetches current private core
-main, compares the complete file tree, and fails if unreadable or different.
+The new-scope exact beta.2 dependencies are staged but not published. No registry
+install, typecheck, build, or defineGatekeeper validation against beta.2 has run.
+The old lockfile is retained explicitly, not fabricated: regenerate it from npm
+after publication, then run the complete Tier 1 suite and live core-main skill
+comparison before merging. Workspace links and local tarballs are not substitutes.
 
 ## Historical Tier 0 evidence (superseded, not registry acceptance)
 

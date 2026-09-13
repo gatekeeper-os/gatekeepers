@@ -1,8 +1,8 @@
 {
-  "name": "@clawkeepers/gatekeeper-example",
+  "name": "@gatekeeper-os/gatekeeper-example",
   "version": "0.1.0",
   "private": true,
-  "description": "Inert community gatekeeper starter; not a service.",
+  "description": "GatekeeperOS inert community gatekeeper starter; capability-based access and deferred approvals for OpenClaw.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,8 +19,8 @@
     "build": "tsup src/index.ts --format esm --dts --clean"
   },
   "dependencies": {
-    "@clawkeepers/gatekeeper-kit": "0.1.0-beta.1",
-    "@clawkeepers/shared": "0.1.0-beta.1",
+    "@gatekeeper-os/gatekeeper-kit": "0.1.0-beta.2",
+    "@gatekeeper-os/shared": "0.1.0-beta.2",
     "typebox": "1.1.39"
   },
   "devDependencies": {
@@ -43,7 +43,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clawkeeper/gatekeepers.git",
+    "url": "git+https://github.com/gatekeeper-os/gatekeepers.git",
     "directory": "template"
   }
 }

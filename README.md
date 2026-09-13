@@ -8,7 +8,7 @@ Community gatekeepers for [GatekeeperOS](https://github.com/gatekeeper-os/gateke
 
 A gatekeeper is the driver through which an agent reaches one service. It holds the credentials (the agent never sees them), exposes a small set of capability-oriented tools that take a grant handle, logs every read, queues every write for human approval, and simulates the write locally so the agent keeps working in the meantime.
 
-All four reference drivers — **fs**, **github**, **mcp**, and **http** — live in the [core repository](https://github.com/gatekeeper-os/gatekeeper-os), at `packages/gatekeeper-fs`, `packages/gatekeeper-github`, `packages/gatekeeper-mcp`, and `packages/gatekeeper-http`. This is a location rule, not a claim that every driver is release-ready; check each driver’s current plan and evidence in core. Community service drivers live here, one folder per vendor.
+All four reference drivers — **fs**, **github**, **mcp**, and **http** — live in the [core repository](https://github.com/gatekeeper-os/gatekeeper-os), at `packages/gkos-gatekeeper-fs`, `packages/gkos-gatekeeper-github`, `packages/gkos-gatekeeper-mcp`, and `packages/gatekeeper-http`. This is a location rule, not a claim that every driver is release-ready; check each driver’s current plan and evidence in core. Community service drivers live here, one folder per vendor.
 
 **Tier 1: registry-backed builds during the rename.** Imports use
 `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`. Until the new-scope

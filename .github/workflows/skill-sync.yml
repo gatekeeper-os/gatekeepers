@@ -12,19 +12,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Fetch current core skill (core-only read token while private)
-        uses: actions/checkout@v4
-        with:
-          repository: clawkeeper/openclaw-os
-          ref: main
-          path: .core-skill
-          sparse-checkout: .agents/skills/write-gatekeeper
-          token: ${{ secrets.CORE_SKILL_READ_TOKEN || github.token }}
-          persist-credentials: false
-      - name: Compare live core-main skill
-        run: |
-          git -C .core-skill rev-parse HEAD
-          python3 .github/check-core-skill.py
+      - name: Verify reviewed pinned core skill snapshot (not live sync)
+        run: python3 .github/check-core-skill-snapshot.py
+      - name: Test live-sync availability and failure handling
+        run: python3 .github/test-live-core-sync.py
+      - name: Probe anonymous core readability
+        id: core
+        run: bash .github/live-core-sync.sh probe
+      - name: Live core-main fetch and parity (required when readable)
+        if: steps.core.outputs.readable == 'true'
+        run: bash .github/live-core-sync.sh fetch
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:

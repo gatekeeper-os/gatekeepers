@@ -15,7 +15,7 @@ jobs:
       - name: Fetch current core skill (core-only read token while private)
         uses: actions/checkout@v4
         with:
-          repository: clawkeeper/openclaw-os
+          repository: gatekeeper-os/gatekeeper-os
           ref: main
           path: .core-skill
           sparse-checkout: .agents/skills/write-gatekeeper

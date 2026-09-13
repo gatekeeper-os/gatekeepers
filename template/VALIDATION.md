@@ -1,6 +1,7 @@
 # Registry-backed validation — 2026-09-12
 
-Tier 1 installs kit/shared at exact `0.1.0-beta.1` from npm via the committed
+The renamed imports currently resolve through explicit npm aliases to previous-scope
+kit/shared at exact `0.1.0-beta.1` from npm via the committed
 pnpm lockfile. No core source aliases, workspace links, or local tarballs are used.
 `pnpm typecheck`, `pnpm build`, `pnpm test`, and `pnpm check:secrets` verify the
 inert template; import of its built entry executes the published kit's synchronous

@@ -1,4 +1,4 @@
-import type { GatekeeperAccount } from "@clawkeepers/shared";
+import type { GatekeeperAccount } from "@gatekeeper-os/shared";
 import { resources } from "./resources.js";
 
 // Deliberately disconnected. A real account must bind credentials privately, validate

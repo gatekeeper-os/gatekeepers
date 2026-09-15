@@ -17,7 +17,12 @@ This is the `write-gatekeeper` skill, condensed. The full version in `.agents/sk
 2. Design the tool surface in `src/tools.ts`: one small group of tools per resource type, every tool takes `grant`, structured inputs and outputs, simplified for the common case. Decide which URL patterns `getGatekeeperFor()` matches.
 3. **STOP.** Open a draft PR containing only `README.md`, `src/tools.ts`, and `src/resources.ts` and ask for review. The tool surface is the part that is expensive to change later; we review it before anything else is written.
 4. After STOP 1 approval, copy [`template/`](template/) to `<vendor>/` and implement against [core’s skeleton](https://github.com/gatekeeper-os/gatekeeper-os/blob/main/packages/gatekeeper-kit/SKELETON.md): vendor, account store, per-resource `KitGatekeeper`, and session. The kernel OAuth router owns the two-stage nonce; vendors preserve its state and perform provider/PKCE checks, not a parallel nonce store.
-5. Register: `openclaw.plugin.json` with the `gkos.gatekeeper` marker; `package.json` with `openclaw.compat`; add a row to the catalog.
+5. Register declaratively through `defineGatekeeper()`: the root `openclaw.plugin.json` id must match the definition, and
+   `contracts.tools` must list its exact tool names (no missing, extra, or duplicate names), alongside the `gkos.gatekeeper`
+   marker. The kit validates the root manifest and owns the upstream wrappers under that plugin identity; every execution
+   still routes through the kernel. Set `package.json` compatibility and add the gatekeeper to the reviewed catalog and the
+   cell's `os/gatekeepers.json`. Run `gkos config apply` to reconcile enabled gatekeeper ids into messaging `tools.alsoAllow`;
+   removed/disabled gatekeepers lose managed admission. Leave native denials, runtime `tools.allow`, and sandbox settings unchanged.
 6. **STOP.** Ask whether to proceed to Phase 2.
 
 **Phase 2 — approvals, caching, simulation, observers**
@@ -30,7 +35,7 @@ This is the `write-gatekeeper` skill, condensed. The full version in `.agents/sk
 
 ```
 gatekeepers/<vendor>/
-├── openclaw.plugin.json     # id gatekeeper-<vendor>, empty contracts.tools, gkos.gatekeeper marker
+├── openclaw.plugin.json     # matching id, exact own contracts.tools, gkos.gatekeeper marker
 ├── package.json             # @gatekeeper-os/gatekeeper-<vendor>, openclaw.compat, peer on openclaw
 ├── src/
 │   ├── index.ts             # export default defineGatekeeper({...})
@@ -51,7 +56,10 @@ The starter is private and fail-closed: no credentials, network adapter, account
 ## Things reviewers will check
 
 - Tool descriptions never mention approvals, queues, caching, OAuth, or simulation. The abstraction is invisible to the agent.
-- No tool is registered by the gatekeeper itself. The kernel registers them.
+- Driver code never calls `api.registerTool`. The kit registers declarative wrappers owned by the gatekeeper plugin, and
+  the kernel still narrows `gk_*` tools per grant. Community names never go in the kernel manifest or global surface.
+- The root manifest's id and exact `contracts.tools` match the definition. Packed model-turn evidence covers a community
+  tool absent from the kernel manifest, including no-grant denial and correct owner-grant visibility.
 - Errors returned to the agent are sanitized (no URLs, tokens, vendor bodies) — use `sanitizeError()` from the kit.
 - The observer strategy is justified in the README (A private-only, B ACL check, C dataset tracking, D low-stakes) using the rule from the docs: C only when the binding spans sub-resources with distinct ACLs *and* there's a per-observer oracle.
 - A resource never becomes ambient by the gatekeeper's own doing.

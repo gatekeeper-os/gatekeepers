@@ -4,9 +4,9 @@ GatekeeperOS is an independent project. It is not affiliated with or endorsed by
 
 **Draft only. Registry-backed builds available; tool-surface reviews still required.** This is a real-file
 companion to core's gatekeeper skeleton, not a functioning service or an npm package to publish.
-The temporary `gatekeeper-example` id satisfies the old published kit; the pending beta.2 switch uses `gkos-gatekeeper-example`. This starter is not a runnable plugin acceptance claim.
+The temporary `gatekeeper-example` id satisfies the old published kit; the unmerged registry-migration PR9 switches to `gkos-gatekeeper-example`. This starter is not a runnable plugin acceptance claim.
 
-It uses `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`, temporarily aliased to the published previous-scope `0.1.0-beta.1` registry versions (see [migration](../MIGRATION.md)); new-scope beta publication is pending.
+It uses `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`, temporarily aliased to the published previous-scope `0.1.0-beta.1` registry versions (see [migration](../MIGRATION.md)); new-scope beta.4 is published, but the registry-migration PR9 remains unmerged. This PR preserves the historical dependency pins; the tool-ownership-fixed kit remains unpublished.
 `private: true` prevents accidental publication; do not install this starter in a running cell.
 
 ## Start a contribution
@@ -29,7 +29,10 @@ It uses `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`, temporarily
 - `resource.ts`: a `KitGatekeeper` subclass with disabled reads/writes and ephemeral overlay storage.
   The kit owns observation authorization and action submission. The example action truthfully declares
   `awaitDecision: true` / `implementsRevert: false`; it cannot be applied. No native execution is claimed.
-- Manifest: empty `contracts.tools`; the kernel registers tools. No catalog enablement is supplied.
+- Manifest: `contracts.tools` lists exactly `gk_example_item_get` and `gk_example_item_put`, matching `src/tools.ts`;
+  its id matches `defineGatekeeper()`. No catalog enablement is supplied. The fixed kit validates the actual root manifest
+  at registration and registers wrappers under the gatekeeper plugin identity. Driver code never calls `api.registerTool`;
+  all execution and per-grant narrowing remain kernel-owned.
 - Deploy inputs: no secrets. Real drivers declare references, never secret values.
 
 The `.invalid` URL is illustrative. There is no network adapter, connected account, token store,
@@ -38,3 +41,15 @@ as any of those. See [VALIDATION.md](VALIDATION.md) for registry-build evidence 
 
 The `api.ts` and `simulate.ts` stubs deny every operation; they do not promise a
 network adapter or synthetic effect. `resource.ts` remains the kit subclass.
+
+## Tool-ownership compatibility boundary
+
+This template prepares the manifest/source contract for the tool-ownership fix. Its dependencies and lockfile remain pinned
+at the historical beta.1 aliases; those artifacts do **not** exercise the new registration validation or catalog-policy
+reconciliation. No fixed kit has been published by this change. Keep the historical `gatekeeper-example` id while using
+that pin; migrate the manifest and definition together to `gkos-gatekeeper-example` when the fixed kit is separately released.
+
+For a real cell using the fixed kit, add the gatekeeper to `os/gatekeepers.json` and run `gkos config apply`. The reconciler
+admits enabled catalog plugin ids in messaging `tools.alsoAllow`, removing managed admission on removal/disable. Do not add
+community tool names to the kernel manifest or widen native denials, runtime `tools.allow`, or sandbox settings. A grant
+is still required. Build/declaration/manifest parity checks below are compatibility evidence, not a packed model-turn pass.

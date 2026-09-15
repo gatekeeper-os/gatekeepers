@@ -6,8 +6,9 @@ This repo holds community gatekeepers for GatekeeperOS. The kernel, contracts an
 ## Invariants (same as the core repo, restated for drivers)
 1. **No upstream modification.** Never patch, fork, vendor, or monkey-patch `openclaw`. Import only `openclaw/plugin-sdk/*`
    and `@gatekeeper-os/gatekeeper-kit` / `@gatekeeper-os/shared`. Never read upstream's SQLite. Never write under the upstream install root.
-2. **Capabilities.** Every tool takes `grant`. Never call `api.registerTool` — the kernel registers tools on your behalf and
-   funnels every call through `resolveGrant()`. A resource becomes ambient only through operator configuration; a gatekeeper
+2. **Capabilities.** Every tool takes `grant`. Never call `api.registerTool` directly — `defineGatekeeper()` owns the tool wrappers under your plugin identity and
+   funnels every call through the kernel and `resolveGrant()`. Your root manifest id and exact `contracts.tools` must match
+   the definition. Catalog reconciliation manages messaging `tools.alsoAllow`; never widen native/runtime/sandbox policy. A resource becomes ambient only through operator configuration; a gatekeeper
    never asserts its own ambience.
 3. **Approvals.** Every read is authorized through `authorizeObservation()` before data returns; every write goes through
    `submitAction()` and is applied only by `applyAction()` after an operator decision. `awaitDecision: true` only when

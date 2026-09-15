@@ -1,3 +1,10 @@
+# Tool-contract source preparation — 2026-09-15
+
+The template root manifest now declares its own exact tool names and matching id. The template test compares the actual
+TypeScript tool declarations with the manifest; the synced authoring skill describes the fixed kit's registration and
+catalog reconciliation. Dependencies and the dependency lockfile are unchanged. Historical beta.1 alias builds do not test
+the new kit runtime validation, grant narrowing, or model-tool visibility. No fixed release or live acceptance is claimed.
+
 # Registry-backed validation — 2026-09-12
 
 The renamed imports currently resolve through explicit npm aliases to previous-scope

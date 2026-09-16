@@ -51,7 +51,7 @@ gatekeepers/<vendor>/
 └── test/
 ```
 
-The starter is private and fail-closed: no credentials, network adapter, account connection, successful observation, or action application. Rename `example` and replace its disabled stubs only after the required reviews. Match compatibility ranges to core’s catalog at implementation time; do not mechanically rename protocol keys such as `gkos.gatekeeper`.
+The starter is an inert, non-publishable template and fails closed: no credentials, network adapter, account connection, successful observation, or action application. Rename `example` and replace its disabled stubs only after the required reviews. Match compatibility ranges to core’s catalog at implementation time; do not mechanically rename protocol keys such as `gkos.gatekeeper`.
 
 ## Things reviewers will check
 

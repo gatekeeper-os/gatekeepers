@@ -15,7 +15,7 @@ All four reference drivers — **fs**, **github**, **mcp**, and **http** — liv
 `@gatekeeper-os/shared@0.1.0-beta.5`, with registry-generated integrity locks.
 No previous-scope aliases, core source links or local tarballs are used. Exact
 installed identities are verified. See [the migration note](MIGRATION.md).
-The starter remains private and inert, not a runnable community service. Tool-surface
+The starter is an inert template, not a runnable service. Tool-surface
 PRs remain welcome and the two reviews are still required.
 
 ```sh

@@ -1,4 +1,4 @@
-"""Verify the reviewed Tier 0 snapshot, without claiming live private-core access."""
+"""Verify the reviewed Tier 0 snapshot, without claiming live core access."""
 from pathlib import Path
 import hashlib
 import json

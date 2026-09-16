@@ -27,17 +27,18 @@ class LiveSyncTests(unittest.TestCase):
                                     capture_output=True, text=True)
             return result, output.read_text() if output.exists() else '', summary.read_text() if summary.exists() else ''
 
-    def test_private_is_explicit_skip(self):
+    def test_private_or_missing_core_is_fatal(self):
         result, output, summary = self.run_sync('probe', status='404')
-        self.assertEqual(result.returncode, 0)
-        self.assertEqual(output, 'readable=false\n')
-        self.assertEqual(summary, 'live sync skipped: core repository not readable\n')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(output + summary, '')
+        self.assertIn('HTTP 404', result.stderr)
+        self.assertNotIn('skipped', result.stdout)
         self.assertNotIn('verified', result.stdout)
 
     def test_public_requires_live_step(self):
         result, output, summary = self.run_sync('probe')
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(output, 'readable=true\n')
+        self.assertEqual(output, '')
         self.assertEqual(summary, '')
 
     def test_probe_errors_are_fatal(self):
@@ -58,6 +59,12 @@ class LiveSyncTests(unittest.TestCase):
         result, _, summary = self.run_sync('fetch')
         self.assertEqual(result.returncode, 0)
         self.assertEqual(summary, 'Live core-main skill parity verified\n')
+
+    def test_workflow_does_not_conditionally_skip_live_fetch(self):
+        workflow = SCRIPT.with_name('workflows').joinpath('skill-sync.yml').read_text()
+        live_step = workflow.split('- name: Live core-main fetch and parity (required)', 1)[1].split('- uses:', 1)[0]
+        self.assertIn('run: bash .github/live-core-sync.sh fetch', live_step)
+        self.assertNotIn('if:', live_step)
 
 
 if __name__ == '__main__':

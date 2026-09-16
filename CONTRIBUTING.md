@@ -64,12 +64,11 @@ The starter is private and fail-closed: no credentials, network adapter, account
 - The observer strategy is justified in the README (A private-only, B ACL check, C dataset tracking, D low-stakes) using the rule from the docs: C only when the binding spans sub-resources with distinct ACLs *and* there's a per-observer oracle.
 - A resource never becomes ambient by the gatekeeper's own doing.
 
-CI always verifies the reviewed pinned snapshot, then probes core anonymously.
-Private/unreadable core (HTTP 404) reports `live sync skipped: core repository not readable`,
-not a live-sync pass. When readable, core-main fetch and complete-tree parity are
-mandatory; fetch/parity failures and other probe errors fail the job. No core-read
-credential is required. Copy the complete reviewed skill from current core and
-refresh the snapshot lock with its exact commit and file hashes when updating it.
-After the public flip, follow the README launch checklist before removing the skip path.
+CI always verifies the reviewed pinned snapshot, probes public core anonymously,
+then fetches current core main and compares the complete skill tree. All stages
+are required: HTTP404, other probe/transport errors, fetch failure or parity mismatch
+fails the job. No private-core exception, conditional fetch or core-read credential
+is used. Copy the complete reviewed skill from current core and refresh the snapshot
+lock with its exact commit and file hashes when updating it.
 Registry-backed
 build/typecheck/declaration tests do not establish live driver acceptance.

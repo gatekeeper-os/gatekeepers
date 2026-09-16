@@ -1,3 +1,15 @@
+# Public live-sync gate — 2026-09-16
+
+Community CI run35156945324, attempt2, passed after the public flip. Its anonymous
+**Live core-main fetch and parity** step ran and passed against core975c54723bba79e5e4f6f3a43b8beeafb724163c.
+Only after that evidence, the private404 skip and workflow conditional were
+removed. Future HTTP/transport, clone or parity failures are fatal. Pinned
+snapshot verification remains separate; no product or skill contents changed.
+
+All earlier private-state statements below are historical evidence, not current
+repository visibility or CI behavior. This live skill check is not driver/runtime
+acceptance; the inert template and beta.5 limitations are unchanged.
+
 # Published beta.5 Tier1 migration — 2026-09-16
 
 The template now depends directly on registry `@gatekeeper-os/gatekeeper-kit`

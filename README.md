@@ -27,19 +27,19 @@ pnpm test
 pnpm check:secrets
 ```
 
-CI always checks the reviewed pinned write-gatekeeper snapshot and separately
-probes core without credentials. While core is private/unreadable (HTTP 404), it
-reports `live sync skipped: core repository not readable`; the live step is
-skipped, not passed. Once readable, fetching core `main` and comparing the complete
-skill tree is mandatory, and any fetch/parity failure is fatal. Probe transport or
-other HTTP errors also fail the job. No core-read token is required.
+CI always checks the reviewed pinned write-gatekeeper snapshot, probes public
+core without credentials, then fetches core `main` and compares the complete skill
+tree. Both checks are mandatory. HTTP404 (missing/private core), other HTTP or
+transport errors, clone failures and parity mismatches all fail the job; there is
+no private-core skip path or conditional live-fetch step. No core-read token is used.
 
-### Public-flip launch checklist
+### Public live-sync evidence
 
-- [ ] After the separately authorized public flip, re-run gatekeepers `build-test`.
-- [ ] Confirm **Live core-main fetch and parity (required when readable)** ran and
-  passed, not skipped, without credentials. Pinned parity is not live-sync evidence.
-- [ ] Only after that evidence, remove the temporary private-core skip path.
+[Run35156945324, attempt2](https://github.com/gatekeeper-os/gatekeepers/actions/runs/35156945324/attempts/2)
+passed after the repositories became public. **Live core-main fetch and parity**
+actually ran and passed against core975c547, rather than being skipped. The
+private-core exception was removed only after that evidence. Pinned snapshot
+parity remains a separate check, never a substitute for the mandatory live fetch.
 
 ## Gatekeepers
 

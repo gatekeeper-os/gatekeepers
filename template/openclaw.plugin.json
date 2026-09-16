@@ -3,7 +3,10 @@
   "name": "GatekeeperOS Example Gatekeeper",
   "description": "Disconnected GatekeeperOS driver starter.",
   "contracts": {
-    "tools": []
+    "tools": [
+      "gk_example_item_get",
+      "gk_example_item_put"
+    ]
   },
   "configSchema": {
     "type": "object",

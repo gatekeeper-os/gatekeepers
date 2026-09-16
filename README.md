@@ -10,10 +10,11 @@ A gatekeeper is the driver through which an agent reaches one service. It holds 
 
 All four reference drivers — **fs**, **github**, **mcp**, and **http** — live in the [core repository](https://github.com/gatekeeper-os/gatekeeper-os), at `packages/gkos-gatekeeper-fs`, `packages/gkos-gatekeeper-github`, `packages/gkos-gatekeeper-mcp`, and `packages/gatekeeper-http`. This is a location rule, not a claim that every driver is release-ready; check each driver’s current plan and evidence in core. Community service drivers live here, one folder per vendor.
 
-**Tier 1: new-scope registry builds (pending publication).** This staged change
-pins `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared` to
-`0.1.0-beta.2`. It must remain unmerged until Matt publishes, the registry lockfile
-is regenerated, and all registry build and live core-skill checks pass.
+**Tier 1: published beta.5 registry builds.** Imports resolve directly to
+`@gatekeeper-os/gatekeeper-kit@0.1.0-beta.5` and
+`@gatekeeper-os/shared@0.1.0-beta.5`, with registry-generated integrity locks.
+No previous-scope aliases, core source links or local tarballs are used. Exact
+installed identities are verified. See [the migration note](MIGRATION.md).
 The starter remains private and inert, not a runnable community service. Tool-surface
 PRs remain welcome and the two reviews are still required.
 
@@ -26,10 +27,19 @@ pnpm test
 pnpm check:secrets
 ```
 
-CI also fetches current core `main` and compares the complete write-gatekeeper
-skill tree. While core is private, this requires the dedicated Actions secret
-`CORE_SKILL_READ_TOKEN` with read-only contents access to core. No pinned-snapshot
-fallback is accepted, and checkout credentials are not persisted for build steps.
+CI always checks the reviewed pinned write-gatekeeper snapshot and separately
+probes core without credentials. While core is private/unreadable (HTTP 404), it
+reports `live sync skipped: core repository not readable`; the live step is
+skipped, not passed. Once readable, fetching core `main` and comparing the complete
+skill tree is mandatory, and any fetch/parity failure is fatal. Probe transport or
+other HTTP errors also fail the job. No core-read token is required.
+
+### Public-flip launch checklist
+
+- [ ] After the separately authorized public flip, re-run gatekeepers `build-test`.
+- [ ] Confirm **Live core-main fetch and parity (required when readable)** ran and
+  passed, not skipped, without credentials. Pinned parity is not live-sync evidence.
+- [ ] Only after that evidence, remove the temporary private-core skip path.
 
 ## Gatekeepers
 

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, realpathSync } from 'node:fs';
 for (const name of ['gatekeeper-kit', 'shared']) {
   const pkg = `@gatekeeper-os/${name}`;
-  const version = '0.1.0-beta.2';
+  const version = '0.1.0-beta.5';
   const spec = JSON.parse(readFileSync(new URL('../template/package.json', import.meta.url))).dependencies[pkg];
   assert.equal(spec, version);
   const entry = realpathSync(new URL(`../template/node_modules/${pkg}/package.json`, import.meta.url));

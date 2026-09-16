@@ -15,11 +15,11 @@ importers:
   template:
     dependencies:
       '@gatekeeper-os/gatekeeper-kit':
-        specifier: npm:@clawkeepers/gatekeeper-kit@0.1.0-beta.1
-        version: '@clawkeepers/gatekeeper-kit@0.1.0-beta.1(openclaw@2026.9.2)'
+        specifier: 0.1.0-beta.5
+        version: 0.1.0-beta.5(openclaw@2026.9.2)
       '@gatekeeper-os/shared':
-        specifier: npm:@clawkeepers/shared@0.1.0-beta.1
-        version: '@clawkeepers/shared@0.1.0-beta.1'
+        specifier: 0.1.0-beta.5
+        version: 0.1.0-beta.5
       openclaw:
         specifier: '>=2026.9.2 <2026.11.0'
         version: 2026.9.2
@@ -67,16 +67,6 @@ packages:
   '@clack/prompts@1.7.0':
     resolution: {integrity: sha512-y7/yvZ2TPAnR9+jnc00klvNNLkJiXFFrQA/hlLCcxA9a2A4zQIOimyFQ9XfwYKiGD1fb5GY8vbKIIgO8d5Tb2A==}
     engines: {node: '>= 20.12.0'}
-
-  '@clawkeepers/gatekeeper-kit@0.1.0-beta.1':
-    resolution: {integrity: sha512-CP/4ctTe0WDXLxJGzcZIhfqK60Lu8oehMtTFwJm6WGuCUvmZMxAxWVULDwuYp2PqLUSj7DSiJbHRr2/sNGWoyg==}
-    engines: {node: '>=22.22.3'}
-    peerDependencies:
-      openclaw: '>=2026.9.2 <2026.11.0'
-
-  '@clawkeepers/shared@0.1.0-beta.1':
-    resolution: {integrity: sha512-sONg7TvmiSJYR2wkqozE30OIqaVJZpFzDY+ya7/pn5bM//RrPs4Q63TfHu7va8LfzDAzutVs7PErtfTeuUFQxA==}
-    engines: {node: '>=22.22.3'}
 
   '@earendil-works/pi-tui@0.84.3':
     resolution: {integrity: sha512-fS6OEQKEEALnKa6Uw8LcgZZ+9CWck7f3MQSCETQp6leUgIFwMEDtKmOUnL9nsYm+RIPmy7OmplVxYRbV6hiaFg==}
@@ -237,6 +227,16 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@gatekeeper-os/gatekeeper-kit@0.1.0-beta.5':
+    resolution: {integrity: sha512-vcuA4HA3LDbNgCIlYSqgwEmTfIf8l4plxlhQMgEhAruD8dYDCr8Bb6QT5v3+x6HY8xfwjBciCtVkUBgQF1Gmeg==}
+    engines: {node: '>=22.22.3'}
+    peerDependencies:
+      openclaw: '>=2026.9.2 <2026.11.0'
+
+  '@gatekeeper-os/shared@0.1.0-beta.5':
+    resolution: {integrity: sha512-w9g/s4BL4vC1SOPqCe+j/IPqEMnwVeGZuiP9ZsfkJd2zaxfYREKQON95CA0cHRhHVuG1w3DOGL0IhcNpFjiSkw==}
+    engines: {node: '>=22.22.3'}
 
   '@google/genai@2.18.0':
     resolution: {integrity: sha512-uy9gWVTAZXuA/2tld0QJl/QNiGEn4QOmfX4PiRgZQmeFQRQhojpD/Gf41SPnBJmjEnT83a+h4AdU1HHYaYvVDw==}
@@ -2106,16 +2106,6 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
-  '@clawkeepers/gatekeeper-kit@0.1.0-beta.1(openclaw@2026.9.2)':
-    dependencies:
-      '@clawkeepers/shared': 0.1.0-beta.1
-      openclaw: 2026.9.2
-      typebox: 1.1.39
-
-  '@clawkeepers/shared@0.1.0-beta.1':
-    dependencies:
-      typebox: 1.1.39
-
   '@earendil-works/pi-tui@0.84.3':
     dependencies:
       get-east-asian-width: 1.6.0
@@ -2198,6 +2188,16 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.12':
     optional: true
+
+  '@gatekeeper-os/gatekeeper-kit@0.1.0-beta.5(openclaw@2026.9.2)':
+    dependencies:
+      '@gatekeeper-os/shared': 0.1.0-beta.5
+      openclaw: 2026.9.2
+      typebox: 1.1.39
+
+  '@gatekeeper-os/shared@0.1.0-beta.5':
+    dependencies:
+      typebox: 1.1.39
 
   '@google/genai@2.18.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))':
     dependencies:

@@ -10,12 +10,11 @@ A gatekeeper is the driver through which an agent reaches one service. It holds 
 
 All four reference drivers — **fs**, **github**, **mcp**, and **http** — live in the [core repository](https://github.com/gatekeeper-os/gatekeeper-os), at `packages/gkos-gatekeeper-fs`, `packages/gkos-gatekeeper-github`, `packages/gkos-gatekeeper-mcp`, and `packages/gatekeeper-http`. This is a location rule, not a claim that every driver is release-ready; check each driver’s current plan and evidence in core. Community service drivers live here, one folder per vendor.
 
-**Tier 1: registry-backed builds during the rename.** Imports use
-`@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`. Until the new-scope
-beta is published, explicit npm aliases resolve those names to the published
-previous-scope `0.1.0-beta.1` artifacts with integrity-locked dependencies, not
-links to core. Exact published identities are verified; this is not evidence that
-new-scope packages are already available. See [the migration note](MIGRATION.md).
+**Tier 1: published beta.5 registry builds.** Imports resolve directly to
+`@gatekeeper-os/gatekeeper-kit@0.1.0-beta.5` and
+`@gatekeeper-os/shared@0.1.0-beta.5`, with registry-generated integrity locks.
+No previous-scope aliases, core source links or local tarballs are used. Exact
+installed identities are verified. See [the migration note](MIGRATION.md).
 The starter remains private and inert, not a runnable community service. Tool-surface
 PRs remain welcome and the two reviews are still required.
 

@@ -4,22 +4,17 @@ The project is now GatekeeperOS: capability-based access and deferred approvals 
 GitHub uses `gatekeeper-os/gatekeeper-os`, `gatekeeper-os/gatekeepers`, and
 `gatekeeper-os/.github`. Package imports use `@gatekeeper-os/*`; the CLI is `gkos`.
 
-## Temporary registry bridge
+## Registry migration complete — beta.5
 
-The new-scope `0.1.0-beta.2` packages are not published yet. For this rename PR only,
-`@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared` are explicit npm aliases
-for `@clawkeepers/gatekeeper-kit@0.1.0-beta.1` and
-`@clawkeepers/shared@0.1.0-beta.1`. The lockfile retains registry integrity hashes;
-`check-registry.mjs` verifies the exact old published identities and versions, not
-workspace links. The unchanged kit API supports renamed source imports. Its driver id validator
-still requires `gatekeeper-example`; the inert template retains that id only for
-this registry bridge. The staged beta.2 switch changes it to
-`gkos-gatekeeper-example` without weakening validation.
+The template now pins the real `@gatekeeper-os/gatekeeper-kit` and
+`@gatekeeper-os/shared` packages at exact `0.1.0-beta.5`, with a lockfile generated
+from npm. The previous-scope beta.1 npm aliases are no longer used. The plugin
+identity is `gkos-gatekeeper-example`, matching beta.5 kit validation; its own
+manifest retains the exact tool contracts introduced by PR12.
 
-A separate, unmerged Tier 1 change switches to exact new-scope `0.1.0-beta.2`
-dependencies after publication. It must install from the registry and pass live
-core-skill sync, typecheck, build, defineGatekeeper validation, and secret checks.
-No local package replacement may stand in for that gate.
+Core npm-only acceptance passed on Node22.22.3 before this switch (run
+`20260916-220009-phase-3`, core PR24). Community template typecheck/build/tests are
+separate Tier1 evidence, not live service or connected-provider acceptance.
 
 ## Intentional old-name survivors
 

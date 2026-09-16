@@ -19,8 +19,8 @@
     "build": "tsup src/index.ts --format esm --dts --clean"
   },
   "dependencies": {
-    "@gatekeeper-os/gatekeeper-kit": "npm:@clawkeepers/gatekeeper-kit@0.1.0-beta.1",
-    "@gatekeeper-os/shared": "npm:@clawkeepers/shared@0.1.0-beta.1",
+    "@gatekeeper-os/gatekeeper-kit": "0.1.0-beta.5",
+    "@gatekeeper-os/shared": "0.1.0-beta.5",
     "typebox": "1.1.39"
   },
   "devDependencies": {

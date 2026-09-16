@@ -4,9 +4,11 @@ GatekeeperOS is an independent project. It is not affiliated with or endorsed by
 
 **Draft only. Registry-backed builds available; tool-surface reviews still required.** This is a real-file
 companion to core's gatekeeper skeleton, not a functioning service or an npm package to publish.
-The temporary `gatekeeper-example` id satisfies the old published kit; the unmerged registry-migration PR9 switches to `gkos-gatekeeper-example`. This starter is not a runnable plugin acceptance claim.
+The `gkos-gatekeeper-example` identity matches the published beta.5 kit and the template's own manifest.
+This starter is not a runnable plugin acceptance claim.
 
-It uses `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`, temporarily aliased to the published previous-scope `0.1.0-beta.1` registry versions (see [migration](../MIGRATION.md)); new-scope beta.4 is published, but the registry-migration PR9 remains unmerged. This PR preserves the historical dependency pins; the tool-ownership-fixed kit remains unpublished.
+It uses the real `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared` packages at exact
+`0.1.0-beta.5` from npm, without previous-scope aliases (see [migration](../MIGRATION.md)).
 `private: true` prevents accidental publication; do not install this starter in a running cell.
 
 ## Start a contribution
@@ -17,7 +19,7 @@ It uses `@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared`, temporarily
    Rename package/plugin/vendor/tool identities and URLs, and match package versions and OpenClaw
    compatibility to the then-current core catalog. `gkos.gatekeeper` is a protocol marker, not an npm scope.
 3. From the copied directory: `pnpm install`, `pnpm typecheck`, `pnpm build`.
-   Package versions pin the published 0.1.0-beta.1 release.
+   Package versions pin the published 0.1.0-beta.5 release.
 4. Implement auth, resource access and persistence only after review; request STOP 2 approval before
    responsibilities 4–7. Run kit tests, core conformance and the VM acceptance harness before claiming alpha.
 
@@ -44,10 +46,9 @@ network adapter or synthetic effect. `resource.ts` remains the kit subclass.
 
 ## Tool-ownership compatibility boundary
 
-This template prepares the manifest/source contract for the tool-ownership fix. Its dependencies and lockfile remain pinned
-at the historical beta.1 aliases; those artifacts do **not** exercise the new registration validation or catalog-policy
-reconciliation. No fixed kit has been published by this change. Keep the historical `gatekeeper-example` id while using
-that pin; migrate the manifest and definition together to `gkos-gatekeeper-example` when the fixed kit is separately released.
+The template declares its own exact manifest tool contract and uses the published beta.5 kit.
+The manifest and definition both identify `gkos-gatekeeper-example`. Import validation and the manifest-parity
+test are Tier1 build evidence; they do not establish live plugin or provider acceptance.
 
 For a real cell using the fixed kit, add the gatekeeper to `os/gatekeepers.json` and run `gkos config apply`. The reconciler
 admits enabled catalog plugin ids in messaging `tools.alsoAllow`, removing managed admission on removal/disable. Do not add

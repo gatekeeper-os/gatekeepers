@@ -7,7 +7,7 @@ const requireTemplate = createRequire(new URL('../template/package.json', import
 
 test('built template passes published defineGatekeeper declaration validation', async () => {
   const { default: entry } = await import('../template/dist/index.js');
-  assert.equal(entry.id, 'gatekeeper-example');
+  assert.equal(entry.id, 'gkos-gatekeeper-example');
   assert.equal(typeof entry.register, 'function');
 });
 

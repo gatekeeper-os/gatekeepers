@@ -1,5 +1,5 @@
 {
-  "id": "gatekeeper-example",
+  "id": "gkos-gatekeeper-example",
   "name": "GatekeeperOS Example Gatekeeper",
   "description": "Disconnected GatekeeperOS driver starter.",
   "contracts": {

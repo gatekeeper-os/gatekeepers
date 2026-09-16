@@ -17,10 +17,8 @@ jobs:
       - name: Test live-sync availability and failure handling
         run: python3 .github/test-live-core-sync.py
       - name: Probe anonymous core readability
-        id: core
         run: bash .github/live-core-sync.sh probe
-      - name: Live core-main fetch and parity (required when readable)
-        if: steps.core.outputs.readable == 'true'
+      - name: Live core-main fetch and parity (required)
         run: bash .github/live-core-sync.sh fetch
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4

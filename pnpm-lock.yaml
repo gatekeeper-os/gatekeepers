@@ -15,11 +15,11 @@ importers:
   template:
     dependencies:
       '@gatekeeper-os/gatekeeper-kit':
-        specifier: 0.1.0-beta.5
-        version: 0.1.0-beta.5(openclaw@2026.9.2)
+        specifier: 0.1.0-beta.6
+        version: 0.1.0-beta.6(openclaw@2026.9.2)
       '@gatekeeper-os/shared':
-        specifier: 0.1.0-beta.5
-        version: 0.1.0-beta.5
+        specifier: 0.1.0-beta.6
+        version: 0.1.0-beta.6
       openclaw:
         specifier: '>=2026.9.2 <2026.11.0'
         version: 2026.9.2
@@ -228,14 +228,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@gatekeeper-os/gatekeeper-kit@0.1.0-beta.5':
-    resolution: {integrity: sha512-vcuA4HA3LDbNgCIlYSqgwEmTfIf8l4plxlhQMgEhAruD8dYDCr8Bb6QT5v3+x6HY8xfwjBciCtVkUBgQF1Gmeg==}
+  '@gatekeeper-os/gatekeeper-kit@0.1.0-beta.6':
+    resolution: {integrity: sha512-ayXK1M2btVPLOJBy0/bkXnZ01+ikAqyetA6DJ7RVVe50VF7isToPy1WjnonQudT9tkESFk3k8uV5KkIZEMvDNg==}
     engines: {node: '>=22.22.3'}
     peerDependencies:
       openclaw: '>=2026.9.2 <2026.11.0'
 
-  '@gatekeeper-os/shared@0.1.0-beta.5':
-    resolution: {integrity: sha512-w9g/s4BL4vC1SOPqCe+j/IPqEMnwVeGZuiP9ZsfkJd2zaxfYREKQON95CA0cHRhHVuG1w3DOGL0IhcNpFjiSkw==}
+  '@gatekeeper-os/shared@0.1.0-beta.6':
+    resolution: {integrity: sha512-QvQPecN2r3rwwph7CcoaQf/PhO0WHW+ds9YVndPyCg/jfriH1Aexhw2xx/yJM40qLqjQKQeDH0Kzj4KoDUjEaQ==}
     engines: {node: '>=22.22.3'}
 
   '@google/genai@2.18.0':
@@ -2189,13 +2189,13 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@gatekeeper-os/gatekeeper-kit@0.1.0-beta.5(openclaw@2026.9.2)':
+  '@gatekeeper-os/gatekeeper-kit@0.1.0-beta.6(openclaw@2026.9.2)':
     dependencies:
-      '@gatekeeper-os/shared': 0.1.0-beta.5
+      '@gatekeeper-os/shared': 0.1.0-beta.6
       openclaw: 2026.9.2
       typebox: 1.1.39
 
-  '@gatekeeper-os/shared@0.1.0-beta.5':
+  '@gatekeeper-os/shared@0.1.0-beta.6':
     dependencies:
       typebox: 1.1.39
 

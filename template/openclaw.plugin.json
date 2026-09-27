@@ -16,7 +16,8 @@
   "gkos": {
     "gatekeeper": {
       "vendor": "example",
-      "apiVersion": 1
+      "apiVersion": 1,
+      "driver": "./dist/driver.js"
     }
   }
 }

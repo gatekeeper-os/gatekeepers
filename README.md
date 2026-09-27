@@ -10,9 +10,11 @@ A gatekeeper is the driver through which an agent reaches one service. It holds 
 
 All four reference drivers — **fs**, **github**, **mcp**, and **http** — live in the [core repository](https://github.com/gatekeeper-os/gatekeeper-os), at `packages/gkos-gatekeeper-fs`, `packages/gkos-gatekeeper-github`, `packages/gkos-gatekeeper-mcp`, and `packages/gatekeeper-http`. This is a location rule, not a claim that every driver is release-ready; check each driver’s current plan and evidence in core. Community service drivers live here, one folder per vendor.
 
-**Tier 1: published beta.5 registry builds.** Imports resolve directly to
-`@gatekeeper-os/gatekeeper-kit@0.1.0-beta.5` and
-`@gatekeeper-os/shared@0.1.0-beta.5`, with registry-generated integrity locks.
+**Tier 1: published beta.6 registry builds.** Imports resolve directly to
+`@gatekeeper-os/gatekeeper-kit@0.1.0-beta.6` and
+`@gatekeeper-os/shared@0.1.0-beta.6`, with registry-generated integrity locks.
+Each gatekeeper ships a kernel-loaded driver module (`src/driver.ts`, which never
+imports `openclaw`) and a thin OpenClaw plugin entry (`src/index.ts`).
 No previous-scope aliases, core source links or local tarballs are used. Exact
 installed identities are verified. See [the migration note](MIGRATION.md).
 The starter is an inert template, not a runnable service. Tool-surface

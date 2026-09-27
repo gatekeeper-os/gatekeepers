@@ -2,9 +2,9 @@
 
 Read the org-wide [CONTRIBUTING](https://github.com/gatekeeper-os/.github/blob/main/CONTRIBUTING.md) first. This file is the part specific to drivers.
 
-**Tool-surface PRs welcome; registry builds are available.** Use the renamed imports
-`@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared` via the temporary
-previous-scope registry aliases documented in [MIGRATION.md](MIGRATION.md). Do not vendor the kit or replace registry dependencies with local
+**Tool-surface PRs welcome; registry builds are available.** Depend directly on the published
+`@gatekeeper-os/gatekeeper-kit` and `@gatekeeper-os/shared` packages at the exact version the template pins
+(see [MIGRATION.md](MIGRATION.md)). Do not vendor the kit or replace registry dependencies with local
 workspace links. The starter remains draft, not an accepted service.
 
 ## The procedure
@@ -17,7 +17,9 @@ This is the `write-gatekeeper` skill, condensed. The full version in `.agents/sk
 2. Design the tool surface in `src/tools.ts`: one small group of tools per resource type, every tool takes `grant`, structured inputs and outputs, simplified for the common case. Decide which URL patterns `getGatekeeperFor()` matches.
 3. **STOP.** Open a draft PR containing only `README.md`, `src/tools.ts`, and `src/resources.ts` and ask for review. The tool surface is the part that is expensive to change later; we review it before anything else is written.
 4. After STOP 1 approval, copy [`template/`](template/) to `<vendor>/` and implement against [core’s skeleton](https://github.com/gatekeeper-os/gatekeeper-os/blob/main/packages/gatekeeper-kit/SKELETON.md): vendor, account store, per-resource `KitGatekeeper`, and session. The kernel OAuth router owns the two-stage nonce; vendors preserve its state and perform provider/PKCE checks, not a parallel nonce store.
-5. Register declaratively through `defineGatekeeper()`: the root `openclaw.plugin.json` id must match the definition, and
+5. Register declaratively. `src/driver.ts` exports `defineGatekeeperDriver({...})` and never imports `openclaw` (the kernel
+   loads it directly); `src/index.ts` is `defineGatekeeper(driver)` from `@gatekeeper-os/gatekeeper-kit/plugin`; the manifest
+   declares `"driver": "./dist/driver.js"` under `gkos.gatekeeper`. The root `openclaw.plugin.json` id must match the definition, and
    `contracts.tools` must list its exact tool names (no missing, extra, or duplicate names), alongside the `gkos.gatekeeper`
    marker. The kit validates the root manifest and owns the upstream wrappers under that plugin identity; every execution
    still routes through the kernel. Set `package.json` compatibility and add the gatekeeper to the reviewed catalog and the
@@ -35,10 +37,11 @@ This is the `write-gatekeeper` skill, condensed. The full version in `.agents/sk
 
 ```
 gatekeepers/<vendor>/
-├── openclaw.plugin.json     # matching id, exact own contracts.tools, gkos.gatekeeper marker
+├── openclaw.plugin.json     # matching id, exact own contracts.tools, gkos.gatekeeper marker + driver path
 ├── package.json             # @gatekeeper-os/gatekeeper-<vendor>, openclaw.compat, peer on openclaw
 ├── src/
-│   ├── index.ts             # export default defineGatekeeper({...})
+│   ├── driver.ts            # export default defineGatekeeperDriver({...}); never imports openclaw
+│   ├── index.ts             # export default defineGatekeeper(driver), from gatekeeper-kit/plugin
 │   ├── vendor.ts            # describe, connectAccount, resources
 │   ├── account.ts           # token store, refresh, getGatekeeperFor
 │   ├── <resource>.ts        # one Gatekeeper impl per resource type

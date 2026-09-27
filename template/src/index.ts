@@ -1,12 +1,5 @@
-import { defineGatekeeper } from "@gatekeeper-os/gatekeeper-kit";
-import { resources } from "./resources.js";
-import { tools } from "./tools.js";
-import { describeWrite } from "./resource.js";
-import { ExampleVendor } from "./vendor.js";
+// OpenClaw plugin entry: declares this gatekeeper's tools. The kernel loads ./driver.js itself.
+import { defineGatekeeper } from "@gatekeeper-os/gatekeeper-kit/plugin";
+import driver from "./driver.js";
 
-export default defineGatekeeper({
-  id: "gkos-gatekeeper-example", vendor: "example", apiVersion: 1,
-  name: "GatekeeperOS Example Gatekeeper", description: "Disconnected GatekeeperOS driver starter.",
-  resources, tools, actions: { gk_example_item_put: { describe: describeWrite } },
-  createVendor: ctx => new ExampleVendor(ctx),
-});
+export default defineGatekeeper(driver);

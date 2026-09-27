@@ -1,3 +1,24 @@
+# Kernel-owned drivers, published beta.6 — 2026-09-27
+
+The template now depends on registry `@gatekeeper-os/gatekeeper-kit` and
+`@gatekeeper-os/shared`, both exact `0.1.0-beta.6`, published 2026-09-27 from core
+tag `v0.1.0-beta.6` (`262b80b`). The lockfile was regenerated from npm with the pinned
+pnpm 10.15.0. The gatekeeper is split as in core's `gkos-gatekeeper-fs`:
+`src/driver.ts` (`defineGatekeeperDriver`, no `openclaw` import) and `src/index.ts`
+(`defineGatekeeper(driver)` from the kit's `/plugin` entry). The manifest declares
+`gkos.gatekeeper.driver: ./dist/driver.js`, and the build emits both modules.
+
+A new test imports the built driver in a fresh Node process with a module resolve
+hook and fails if any `openclaw` specifier is resolved; the same hook on the plugin
+entry resolves `openclaw/plugin-sdk/plugin-entry`, which shows the hook itself works.
+Injecting an `openclaw` import into the built driver makes the test fail. The pinned
+write-gatekeeper skill snapshot is byte-identical to core `262b80b`.
+
+Local run on Node 22.22.3, pnpm 10.15.0: pinned snapshot check, live-sync unit
+tests, frozen install, typecheck, build, test (registry identities plus 3 template
+tests) and the secret gate all pass. This is Tier1 build and declaration evidence,
+not live plugin, kernel-load or provider acceptance.
+
 # Public live-sync gate — 2026-09-16
 
 Community CI run35156945324, attempt2, passed after the public flip. Its anonymous

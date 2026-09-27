@@ -1,8 +1,8 @@
 {
   "repository": "gatekeeper-os/gatekeeper-os",
-  "commit": "e253d5e4364b7c729f5bb71c4e2cd8de9c03945c",
-  "verification": "pinned source snapshot; byte parity verified against core tool-ownership fix commit; no release or live sync claim",
+  "commit": "262b80b6be41db04f2270129b9ab8023e861e5b7",
+  "verification": "pinned source snapshot; byte parity verified against core v0.1.0-beta.6 kernel-owned drivers skill; no live sync claim",
   "files": {
-    "SKILL.md": "e466a16d11e0679cf9a6820355a89e75bfe6df4855acd91cf8116bf1a6ea51f5"
+    "SKILL.md": "2fbd0ea3f46e50c988971f5bb744b6c89aa5ad58b15093f4a4fcee64d45d169c"
   }
 }
